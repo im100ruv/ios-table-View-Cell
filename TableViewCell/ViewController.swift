@@ -8,17 +8,33 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
+    @IBOutlet weak var companyTableView: UITableView!
+    
+    let company = ["Google", "Amazon", "Apple", "Microsoft", "Samsung", "Facebook"]
+    let employeeNo = [6.5, 4.3, 4.0, 5.8, 5.1, 4.1]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        companyTableView.delegate = self
+        companyTableView.dataSource = self
+        
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return company.count
     }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = companyTableView.dequeueReusableCell(withIdentifier: "companyTableCell")
+        
+        cell?.textLabel?.text = company[indexPath.row]
+        cell?.detailTextLabel?.text = "\(employeeNo[indexPath.row])"
+        
+        return cell!
+    }
+    
 
 
 }
